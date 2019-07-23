@@ -95,6 +95,24 @@ extension MessagePackValue: Hashable {
         case .extended(let type, let data): return 31 &* type.hashValue &+ data.count
         }
     }
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .nil: return;
+        case .bool(let value): hasher.combine(value);
+        case .int(let value): hasher.combine(value);
+        case .uint(let value): hasher.combine(value);
+        case .float(let value): hasher.combine(value);
+        case .double(let value): hasher.combine(value);
+        case .string(let string): hasher.combine(string);
+        case .binary(let data): hasher.combine(data);
+        case .array(let array): hasher.combine(array);
+        case .map(let dict): hasher.combine(dict);
+        case .extended(let type, let data):
+            hasher.combine(type);
+            hasher.combine(data);
+        }
+    }
 }
 
 public enum MessagePackError: Error {

@@ -456,7 +456,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Pandamonia LLC";
 				TargetAttributes = {
 					8253217C1EFFC9C400914B55 = {
@@ -493,10 +493,11 @@
 			};
 			buildConfigurationList = 825321771EFFC9C400914B55 /* Build configuration list for PBXProject "MessagePack" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 825321731EFFC9C400914B55;
 			productRefGroup = 8253217E1EFFC9C400914B55 /* Products */;
@@ -845,6 +846,7 @@
 		825321921EFFC9C500914B55 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -865,6 +867,7 @@
 		825321931EFFC9C500914B55 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
