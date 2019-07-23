@@ -20,7 +20,7 @@ class HashValueTests: XCTestCase {
     }()
 
     func testNilHashValue() {
-        XCTAssertEqual(MessagePackValue.nil.hashValue, 0)
+        XCTAssertEqual(MessagePackValue.nil.hashValue, 0.hashValue);
     }
 
     func testBoolHashValue() {
@@ -58,13 +58,14 @@ class HashValueTests: XCTestCase {
     }
 
     func testBinaryHashValue() {
-        XCTAssertEqual(MessagePackValue.binary(Data()).hashValue, 0)
-        XCTAssertEqual(MessagePackValue.binary(Data([0x00, 0x01, 0x02, 0x03, 0x04])).hashValue, 5)
+        XCTAssertEqual(MessagePackValue.binary(Data()).hashValue, Data().hashValue)
+        XCTAssertEqual(MessagePackValue.binary(Data([0x00, 0x01, 0x02, 0x03, 0x04])).hashValue,
+                       Data([0x00, 0x01, 0x02, 0x03, 0x04]).hashValue)
     }
 
     func testArrayHashValue() {
         let values: [MessagePackValue] = [1, true, ""]
-        XCTAssertEqual(MessagePackValue.array(values).hashValue, 3)
+        XCTAssertEqual(MessagePackValue.array(values).hashValue, values.hashValue)
     }
 
     func testMapHashValue() {
@@ -73,11 +74,24 @@ class HashValueTests: XCTestCase {
             "b": "banana",
             "c": "cookie",
         ]
-        XCTAssertEqual(MessagePackValue.map(values).hashValue, 3)
+        XCTAssertEqual(MessagePackValue.map(values).hashValue, values.hashValue)
     }
 
     func testExtendedHashValue() {
-        XCTAssertEqual(MessagePackValue.extended(5, Data()).hashValue, Int(5).hashValue * 31 + Int(0))
-        XCTAssertEqual(MessagePackValue.extended(5, Data([0x00, 0x01, 0x02, 0x03, 0x04])).hashValue, Int(5).hashValue * 31 + Int(5))
+        let case1Type: Int8 = 5
+        let case1Data: Data = Data()
+        var hasher1: Hasher = Hasher()
+        hasher1.combine(case1Type)
+        hasher1.combine(case1Data)
+        let hash1: Int = hasher1.finalize()
+        XCTAssertEqual(MessagePackValue.extended(case1Type, case1Data).hashValue, hash1)
+
+        let case2Type: Int8 = 42
+        let case2Data: Data = Data([0x00, 0x01, 0x02, 0x03, 0x04])
+        var hasher2: Hasher = Hasher()
+        hasher2.combine(case2Type)
+        hasher2.combine(case2Data)
+        let hash2: Int = hasher2.finalize()
+        XCTAssertEqual(MessagePackValue.extended(case2Type, case2Data).hashValue, hash2)
     }
 }
